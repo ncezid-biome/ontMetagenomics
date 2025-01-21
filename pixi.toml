@@ -1,0 +1,20 @@
+[project]
+authors = ["Lee Katz - Aspen <gzu2@cdc.gov>"]
+channels = ["conda-forge", "bioconda"]
+description = "Add a short description here"
+name = "cruise-ship-2025"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+kalamari = ">=5.8.0,<6"
+kraken2 = ">=2.1.3,<3"
+kmer-jellyfish = ">=2.3.1,<3"
+serotypefinder = ">=2.0.2,<3"
+virulencefinder = ">=2.0.4,<3"
+pyqt_distutils = ">=0.7.3,<0.8"
+pip = ">=24.3.1,<25"
+setuptools = ">=75.8.0,<76"
+krakentools = ">=1.2,<2"
