@@ -30,6 +30,7 @@ function logmsg {
 
 logmsg "Monitoring $INBOX for ONT fastq.gz files"
 
+reads_done="";
 while [ 1 ]; do
     reads=$(\ls $INBOX/*.fastq.gz 2>/dev/null | head -n 1)
     if [ "$reads" ]; then
@@ -46,13 +47,21 @@ while [ 1 ]; do
         logmsg "No reads found in $INBOX. Sleeping."
     fi
 
-    # Compile results with another script and another qsub invocation
-    # Krona plots from Kraken2:
-    #  Find all available and finished reports and combine them with kraken tools
-    #  Use kraken tools to import results into krona
-    # Assemble MAGs
-    #  Use all available reads with .done files to assemble MAGs
-    # cgMLST
+    # Make a running list of all the directories that have been analyzed
+    reads_done_now=$(ls -d $OUTBOX/*/.done 2>/dev/null || true)
+
+    if [ "$reads_done_now" != "$reads_done" ]; then
+        compile
+        reads_done=$reads_done_now
+        
+        # Compile results with another script and another qsub invocation
+        # Krona plots from Kraken2:
+        #  Find all available and finished reports and combine them with kraken tools
+        #  Use kraken tools to import results into krona
+        # Assemble MAGs
+        #  Use all available reads with .done files to assemble MAGs
+        # cgMLST
+    fi
 
     # Sleep for a minute
     for i in $(seq 1 10); do

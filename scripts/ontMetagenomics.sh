@@ -4,10 +4,11 @@
 #$ -N ontMetagenomics
 #$ -q edlb.q
 #$ -pe smp 2-16
-#$ -V -cwd
+#$ -cwd -V
 
 set -e
 set -u
+set -x
 
 dir=$1
 db=$2
