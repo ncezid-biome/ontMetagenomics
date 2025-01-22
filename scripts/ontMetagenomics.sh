@@ -8,7 +8,7 @@
 
 set -e
 set -u
-set -x
+# set -x # Uncomment for debugging
 
 dir=$1
 db=$2

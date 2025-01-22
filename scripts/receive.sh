@@ -40,9 +40,10 @@ while [ 1 ]; do
         # Move the reads to the outbox
         sourceDir=$OUTBOX/$(basename $reads .fastq.gz)
         mkdir -pv $sourceDir
-        mv -v $INBOX/*.fastq.gz $sourceDir/ >&2
+        mv -v $reads $sourceDir/ >&2
         # Do all the analysis in the same directory as the reads
-        qsub -pe smp 1-16 -o $LOG -j y -N ontMetagenomics $thisDir/ontMetagenomics.sh $sourceDir $(realpath ./db) >&2
+        # qsub -pe smp 1-16 -o $LOG -j y -N ontMetagenomics $thisDir/ontMetagenomics.sh $sourceDir $(realpath ./db) >&2
+        bash $thisDir/ontMetagenomics.sh $sourceDir $(realpath ./db) >&2
     else 
         logmsg "No reads found in $INBOX. Sleeping."
     fi
@@ -51,7 +52,7 @@ while [ 1 ]; do
     reads_done_now=$(ls -d $OUTBOX/*/.done 2>/dev/null || true)
 
     if [ "$reads_done_now" != "$reads_done" ]; then
-        compile
+        # compile
         reads_done=$reads_done_now
         
         # Compile results with another script and another qsub invocation
